@@ -1,11 +1,11 @@
-const express = require("express");
-const User = require("../Models/User");
-const router = express.Router();
-const { body, validationResult } = require('express-validator');
-const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import express from "express";
+import User from "../Models/User.js"
+const router = express.Router()
+import { body, validationResult}  from 'express-validator';
+import bcryptjs from 'bcryptjs';
+// import jwt from 'jsonwebtoken';
 
-const fetchUser = require("../middleware/fetchUser")
+// import fetchUser from "../middleware/fetchUser"
 
 const jtw_secret = "iamhappywith$this";
 router.post('/createuser',
@@ -20,7 +20,6 @@ router.post('/createuser',
         // console.log(req.body)
         // const user = User(req.body);
         // user.save()
-
         //if error happens and return bad request and error
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -44,15 +43,16 @@ router.post('/createuser',
             user = await User.create({
                 name: req.body.name,
                 email: req.body.email,
-                password: secPass
+                password: secPass,
+                role:req.body.role
             });
 
             const data = {
                 user: { id: user.id }
             }
-            const authtoken = jwt.sign(data, jtw_secret);
+            // const authtoken = jwt.sign(data, jtw_secret);
             success = true;
-            res.json({ success, authtoken });
+            // res.json({ success, authtoken });
             // console.log(user)
             // res.json(user);
 
@@ -68,69 +68,73 @@ router.post('/createuser',
         // }
         // res.send({ errors: result.array() });
 
-
-
-
-
-
-    })
-router.post('/login',
-    //validation for multiple parameters requir array 
-    body('email', 'enter a proper email').exists(),
-
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        //object of email and password taken from request 
-        const { email, password } = req.body;
-
-
-        try {
-            const user = await User.findOne({ email });
-            if (!user) {
-                return res.status(500).json({ error: "enter valid credentials for login." });
-            }
-
-            const passwordCompare = await bcryptjs.compare(password, user.password);
-
-            if (!passwordCompare) {
-                success = false;
-
-                return res.status(500).json({ success, error: "enter valid credentials for login." });
-            }
-
-            const data = {
-                user: { id: user.id }
-            }
-            const authtoken = jwt.sign(data, jtw_secret);
-            success = true;
-            res.json({ success, authtoken });
-
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({ error: "enter valid credentials for login." });
-        }
-
     })
 
-//getuser endpoint is use to get user details 
-//fetchUser is middleware to get token vefication. we can use it in every part where we want to acces details of user
-router.post('/getuser', fetchUser, async (req, res) => {
-
-    try {
-        const userId = req.user.id;
-        // console.log(userId)
-        // const user = await User.findOne(user.userId).select("-password");//.select -password is used to disselct the password
-
-        const user = await User.findById(userId).select("-password");
-        res.send(user)
 
 
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ error: "enter valid credentials for login." });
-    }
-})
-module.exports = router;
+
+
+// router.post('/login',
+//     //validation for multiple parameters requir array 
+//     body('email', 'enter a proper email').exists(),
+
+//     async (req, res) => {
+//         const errors = validationResult(req);
+//         if (!errors.isEmpty()) {
+//             return res.status(400).json({ errors: errors.array() });
+//         }
+//         //object of email and password taken from request 
+//         const { email, password } = req.body;
+
+
+//         try {
+//             const user = await User.findOne({ email });
+//             if (!user) {
+//                 return res.status(500).json({ error: "enter valid credentials for login." });
+//             }
+
+//             const passwordCompare = await bcryptjs.compare(password, user.password);
+
+//             if (!passwordCompare) {
+//                 success = false;
+
+//                 return res.status(500).json({ success, error: "enter valid credentials for login." });
+//             }
+
+//             const data = {
+//                 user: { id: user.id }
+//             }
+//             const authtoken = jwt.sign(data, jtw_secret);
+//             success = true;
+//             res.json({ success, authtoken });
+
+//         } catch (error) {
+//             console.error(error.message);
+//             res.status(500).json({ error: "enter valid credentials for login." });
+//         }
+
+//     })
+
+// //getuser endpoint is use to get user details 
+// //fetchUser is middleware to get token vefication. we can use it in every part where we want to acces details of user
+// router.post('/getuser', fetchUser, async (req, res) => {
+
+//     try {
+//         const userId = req.user.id;
+//         // console.log(userId)
+//         // const user = await User.findOne(user.userId).select("-password");//.select -password is used to disselct the password
+
+//         const user = await User.findById(userId).select("-password");
+//         res.send(user)
+
+
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).json({ error: "enter valid credentials for login." });
+//     }
+// })
+
+
+
+
+export default router; // Export the router
