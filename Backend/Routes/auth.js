@@ -3,7 +3,7 @@ import User from "../Models/User.js"
 const router = express.Router()
 import { body, validationResult}  from 'express-validator';
 import bcryptjs from 'bcryptjs';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 // import fetchUser from "../middleware/fetchUser"
 
@@ -50,9 +50,9 @@ router.post('/createuser',
             const data = {
                 user: { id: user.id }
             }
-            // const authtoken = jwt.sign(data, jtw_secret);
+            const authtoken = jwt.sign(data, jtw_secret);
             success = true;
-            // res.json({ success, authtoken });
+            res.json({ success, authtoken });
             // console.log(user)
             // res.json(user);
 
@@ -74,46 +74,51 @@ router.post('/createuser',
 
 
 
-// router.post('/login',
-//     //validation for multiple parameters requir array 
-//     body('email', 'enter a proper email').exists(),
+router.post('/login',
+    //validation for multiple parameters requir array 
+    body('email', 'enter a proper email').exists(),
 
-//     async (req, res) => {
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//             return res.status(400).json({ errors: errors.array() });
-//         }
-//         //object of email and password taken from request 
-//         const { email, password } = req.body;
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        //object of email and password taken from request 
+        const { email, password, role } = req.body;
 
 
-//         try {
-//             const user = await User.findOne({ email });
-//             if (!user) {
-//                 return res.status(500).json({ error: "enter valid credentials for login." });
-//             }
+        try {
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.status(500).json({ error: "enter valid credentials for login." });
+            }
 
-//             const passwordCompare = await bcryptjs.compare(password, user.password);
+            const allowedroles = await User.findOne({ role });
+            if (!user) {
+                return res.status(500).json({ error: "enter valid credentials for login." });
+            }
 
-//             if (!passwordCompare) {
-//                 success = false;
+            const passwordCompare = await bcryptjs.compare(password, user.password);
 
-//                 return res.status(500).json({ success, error: "enter valid credentials for login." });
-//             }
+            if (!passwordCompare) {
+                success = false;
 
-//             const data = {
-//                 user: { id: user.id }
-//             }
-//             const authtoken = jwt.sign(data, jtw_secret);
-//             success = true;
-//             res.json({ success, authtoken });
+                return res.status(500).json({ success, error: "enter valid credentials for login." });
+            }
 
-//         } catch (error) {
-//             console.error(error.message);
-//             res.status(500).json({ error: "enter valid credentials for login." });
-//         }
+            const data = {
+                user: { id: user.id }
+            }
+            const authtoken = jwt.sign(data, jtw_secret);
+            success = true;
+            res.json({ success, authtoken });
 
-//     })
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({ error: "enter valid credentials for login." });
+        }
+
+    })
 
 // //getuser endpoint is use to get user details 
 // //fetchUser is middleware to get token vefication. we can use it in every part where we want to acces details of user

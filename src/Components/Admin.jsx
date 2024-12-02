@@ -7,8 +7,6 @@ export default function
         <p>this is admin</p>
         <p className="border"> this is User</p>
       <form action="">
-        <label htmlFor="name">name</label>
-        <input type="text" placeholder="enter name here" />
 
         <label htmlFor="name"> email</label>
         <input type="text" placeholder="enter email here" />
@@ -16,7 +14,13 @@ export default function
         <label htmlFor="name">password</label>
         <input type="text" placeholder="enter password here" />
 
+        <label htmlFor="name"> confirm password</label>
+        <input type="text" placeholder="enter confirm password here" />
       
+
+      <div>
+        <button><input type="submit" /></button>
+      </div>
       </form>
         
     </div>

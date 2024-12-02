@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
-export default function Manager
-() {
+export default function Editor() {
   return (
-    <div>Manager
-         <p className="border"> this is User</p>
+    <div>
+      Editor
+      <p className="border"> this is User</p>
       <form action="">
         <label htmlFor="name">name</label>
         <input type="text" placeholder="enter name here" />
@@ -15,8 +15,12 @@ export default function Manager
         <label htmlFor="name">name</label>
         <input type="text" placeholder="enter password here" />
 
-      
+        <div>
+          <button>
+            <input type="submit" />
+          </button>
+        </div>
       </form>
     </div>
-  )
+  );
 }

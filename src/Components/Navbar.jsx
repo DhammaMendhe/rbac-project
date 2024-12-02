@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   return (
     <div className="mb-10">
-      <nav className="">
-        <ul className="border flex align-middle">
+      <nav className=" flex justify-between">
+        <ul className="border flex gap-9">
           {" "}
           <li className=" text-red-500 ">
             <Link
@@ -56,12 +56,11 @@ export default function Navbar() {
               //     location.pathname === "/about" ? "active" : ""
               //   }`}
               //   aria-disabled="true"
-              to="/Manager"
+              to="/Editor"
             >
-               Manager
+              Editor
             </Link>
           </li>
-          
           {/* <li className="nav-item text-red-500">
             <Link
               //   className={`${
@@ -74,6 +73,20 @@ export default function Navbar() {
             </Link>
           </li> */}
         </ul>
+
+        <div className="loginsignup flex gap-4">
+          <div className="signup">
+            <Link to="/Signup">
+              {" "}
+              <button>signup</button>
+            </Link>
+          </div>
+          <div className="login">
+          <Link to="/Login">
+              {" "}
+              <button>Login</button>
+            </Link>          </div>
+        </div>
       </nav>
     </div>
   );
