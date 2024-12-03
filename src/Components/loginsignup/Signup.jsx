@@ -7,7 +7,7 @@ export default function Signup() {
     email: "",
     password: "",
   });
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ export default function Signup() {
       console.log("Token saved successfully.");
 
       localStorage.setItem("token", json.authtoken);
-      console.log("this is authtoken",authtoken);
+      // console.log("this is authtoken",token);
       // props.showalert("logged in successfully", "success");
       navigate("/");
     } else {
@@ -141,6 +141,10 @@ export default function Signup() {
             onChange={onChange}
           />
         </div> */}
+        <div className="login">
+          <p>already have account..</p>
+          
+        </div>
 
         {/* Submit Button */}
         <div className="text-center">

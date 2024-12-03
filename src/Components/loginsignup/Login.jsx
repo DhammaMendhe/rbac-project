@@ -2,8 +2,12 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import './css/loginsignup.css'
 export default function Login() {
-  const [credentials, setcredentials] = useState({ email: "", password: "" });
-  const [selectedRole, setSelectedRole] = useState(""); 
+  const [credentials, setcredentials] = useState({
+    email: "",
+    password: "",
+    role: "",
+  });
+  // const [selectedRole, setSelectedRole] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,6 +22,7 @@ export default function Login() {
       body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
+        role: credentials.role,
       }),
     });
 
@@ -27,8 +32,8 @@ export default function Login() {
       // redirect
       localStorage.setItem("token", json.authtoken);
       console.log("Token saved successfully.");
-      props.showalert("logged in successfully", "success");
-      navigate("/home");
+      // props.showalert("logged in successfully", "success");
+      navigate("/");
 
       // if(localStorage.getItem('token')){
       //   <> user information </>
@@ -36,7 +41,8 @@ export default function Login() {
 
       // }
     } else {
-      props.showalert("invalid credetials", "danger");
+      // props.showalert("invalid credetials", "danger")c;
+      // console.log("enter valid credentials");
     }
   };
 
@@ -44,11 +50,12 @@ export default function Login() {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-
   const handleRoleChange = (event) => {
-    setSelectedRole(event.target.value); 
+    setcredentials({ ...credentials, [event.target.name]: event.target.value });
+    // setSelectedRole(event.target.value);
+    // console.log("this is value",event.target.value)
   };
-  
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 mt-11">
       <form
@@ -81,11 +88,10 @@ export default function Login() {
           <input
             type="password"
             id="password"
-            name="passoword"
+            name="password"
             placeholder="Enter password here"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             onChange={onChange}
-
           />
         </div>
         {/* Confirm Password */}
@@ -99,40 +105,41 @@ export default function Login() {
           <input
             type="password"
             name="confirm password"
-
             id="confirm-password"
             placeholder="Enter confirm password here"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            onChange={onChange}
-
+            // onChange={onChange}
           />
         </div>
         {/* Role */}
         <div>
-      <label htmlFor="Choose-a-Role" className="block text-gray-600 mb-2">
-        Choose a Role
-      </label>
-      <select
-        id="Choose-a-Role"
-        name="user"
-        className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        onChange={handleRoleChange} // Trigger focus on input field
-      >
-        <option value="Admin">Admin</option>
-        <option value="Editor">Editor</option>
-        <option value="User">User</option>
-      </select>
+          {/* <label htmlFor="Choose-a-Role" className="block text-gray-600 mb-2">
+            Choose a Role
+          </label>
+          <select
+            id="Choose-a-Role"
+            name="role"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={handleRoleChange} // Trigger focus on input field
+            value={credentials.role} // Bind dropdown to credentials.role
 
-      <input
-        type="text"
-        id="role-input"
-        name="Role"
-        placeholder="Enter details for the selected role"
-        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        value={selectedRole}// Attach the ref to this input
-        readOnly
-      />
-    </div>
+          >
+            <option value="Admin">Admin</option>
+            <option value="Editor">Editor</option>
+            <option value="User">User</option>
+          </select> */}
+          <label htmlFor="role" className="block text-gray-600 mb-2"> your role</label>
+          <input
+            type="text"
+            id="role-input"
+            name="role"
+            placeholder="Enter details for the selected role"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            // value={credentials.role} // Bind input to credentials.role
+            onChange={onChange}
+            // readOnly
+          />
+        </div>
         <div className="text-center">
           <button
             type="submit"

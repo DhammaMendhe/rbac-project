@@ -1,13 +1,16 @@
 import express from "express";
 import User from "../Models/User.js"
 const router = express.Router()
-import { body, validationResult}  from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import dotenv from 'dotenv';
+dotenv.config();
 // import fetchUser from "../middleware/fetchUser"
 
-const jtw_secret = "iamhappywith$this";
+const jtw_secret = process.env.jtw_secret;
+
+
 router.post('/createuser',
     //validation for multiple parameters requir array 
     [body('name', 'enter a proper name').notEmpty().isLength({ min: 3 }),
@@ -44,7 +47,7 @@ router.post('/createuser',
                 name: req.body.name,
                 email: req.body.email,
                 password: secPass,
-                role:req.body.role
+                role: req.body.role
             });
 
             const data = {
@@ -84,30 +87,36 @@ router.post('/login',
             return res.status(400).json({ errors: errors.array() });
         }
         //object of email and password taken from request 
-        const { email, password, role } = req.body;
+        const { email, password,role } = req.body;
 
 
         try {
-            const user = await User.findOne({ email });
-            if (!user) {
+            let success = false;
+            const user1 = await User.findOne({ email });
+            if (!user1) {
                 return res.status(500).json({ error: "enter valid credentials for login." });
             }
-
+            console.log(user1)
             const allowedroles = await User.findOne({ role });
-            if (!user) {
-                return res.status(500).json({ error: "enter valid credentials for login." });
+
+            if (!allowedroles) {
+                return res.status(500).json({ error: "enter valid role credentials for login." });
             }
 
-            const passwordCompare = await bcryptjs.compare(password, user.password);
+            // else{
+            //     return res.status(200).json({"success":"you logged in as.."})
+            // }
+            // console.log("this is role",allowedroles.role);
+
+            const passwordCompare = await bcryptjs.compare(password, user1.password);
 
             if (!passwordCompare) {
                 success = false;
-
                 return res.status(500).json({ success, error: "enter valid credentials for login." });
             }
 
             const data = {
-                user: { id: user.id }
+                user: { id: user1.id }
             }
             const authtoken = jwt.sign(data, jtw_secret);
             success = true;
