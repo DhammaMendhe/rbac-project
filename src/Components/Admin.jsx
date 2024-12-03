@@ -1,4 +1,5 @@
 import React from 'react'
+import Allusers from './admin/Allusers'
 
 export default function 
 () {
@@ -22,7 +23,7 @@ export default function
         <button><input type="submit" /></button>
       </div>
       </form>
-        
+        <Allusers/>
     </div>
   )
 }

@@ -9,15 +9,14 @@ import Register from "./Components/Register";
 import Login from "./Components/loginsignup/Login";
 import Signup from "./Components/loginsignup/Signup";
 import Footer from "./Components/Footer";
-
+import UserStates from './Context/UserState'
 //build alerts for errors ,not having not empty or something..
 
 function App() {
   return (
     <>
-    <userState>
-
-
+    
+    <UserStates>
       <Router>
         <Navbar />
         <Routes>
@@ -33,7 +32,7 @@ function App() {
         </Routes>
       </Router>
 
-      </userState>
+      </UserStates>
       {/* <Footer/> */}
     </>
   );

@@ -4,9 +4,9 @@ export default function Navbar() {
   return (
     <div className="mb-10">
       <nav className=" flex justify-between">
-        <ul className="border flex gap-9">
+        <ul className=" flex gap-9">
           {" "}
-          <li className=" text-red-500 ">
+          <li className="">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
@@ -17,7 +17,7 @@ export default function Navbar() {
               Home
             </Link>
           </li>{" "}
-          <li className="border text-red-500 ">
+          {/* <li className="border text-black-500 ">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
@@ -27,8 +27,8 @@ export default function Navbar() {
             >
               Register
             </Link>
-          </li>
-          <li className="border text-red-500 ">
+          </li> */}
+          <li className=" text-black-500 ">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
@@ -39,7 +39,7 @@ export default function Navbar() {
               user
             </Link>
           </li>{" "}
-          <li className="border text-red-500 ">
+          <li className=" text-black-500 ">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
@@ -50,7 +50,7 @@ export default function Navbar() {
               Admin
             </Link>
           </li>{" "}
-          <li className="border text-red-500 ">
+          <li className=" text-black-500 ">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
@@ -61,7 +61,7 @@ export default function Navbar() {
               Editor
             </Link>
           </li>
-          {/* <li className="nav-item text-red-500">
+          {/* <li className="nav-item text-black-500">
             <Link
               //   className={`${
               //     location.pathname === "/about" ? "active" : ""
