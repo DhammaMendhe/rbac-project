@@ -10,7 +10,7 @@ const jtw_secret = "iamhappywith$this";
 //editor authtoken : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc0ZDU3Nzg4MDE0YTJhNGNmNGFjZDdkIn0sImlhdCI6MTczMzEyMTkxMn0.s7g8qNEerZT4z-4_Hdlr-qc1PMcOWqkXzcDN2vYXWH4
 
 
-const fetchUser = async(req, res, next) => {
+const fetchUser = async (req, res, next) => {
     const token = req.header('auth-token');
     // console.log(token)
     if (!token) {
@@ -22,19 +22,15 @@ const fetchUser = async(req, res, next) => {
         req.user = data.user;
         // console.log(req.user)
 
-        const admin = await user.findOne({ _id: req.user.id,role:"admin"});
-        const editor = await user.findOne({ _id: req.user.id,role:"editor"});
+        const admin = await user.findOne({ _id: req.user.id, role: "admin" });
+        const editor = await user.findOne({ _id: req.user.id, role: "editor" });
 
         // console.log(editor)
 
-        if (!admin && !editor ) {
+        if (!admin && !editor) {
             return res.status(403).send("Forbidden: You don't have admin privileges.");
         }
-        // if () {
-        //     return res.status(403).send("Forbidden: You don't have admin privileges.");
-        // }
-
-        // console.log("editor user found:", editor);        
+      
         next();
     } catch (error) {
         res.status(401).send("please authenticate using proper token");

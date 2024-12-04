@@ -41,6 +41,9 @@ export default function Signup() {
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
+  const handleToLogin = ()=>{
+    navigate("/login")
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
@@ -141,8 +144,10 @@ export default function Signup() {
             onChange={onChange}
           />
         </div> */}
-        <div className="login">
-          <p>already have account..</p>
+        <div className="login flex justify-center" >
+        <p onClick={handleToLogin}>already have account..</p>
+
+          <p onClick={handleToLogin} className="cursor-pointer block text-gray-600 mb-2 ">click here.</p>
           
         </div>
 

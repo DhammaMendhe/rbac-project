@@ -1,92 +1,96 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export default function Navbar() {
+  const navigate = useNavigate();
+
+  const handlelogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+  const handleluser = () => {
+    if (localStorage.getItem("token")) {
+      console.log("token");
+    }
+  };
+
   return (
-    <div className="mb-10">
-      <nav className=" flex justify-between">
-        <ul className=" flex gap-9">
-          {" "}
-          <li className="">
+    <div className="mb-10 shadow-lg">
+      <nav className="flex justify-between items-center bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white">
+        {/* Left Navigation */}
+        <ul className="flex gap-6 text-lg font-medium">
+          <li>
             <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
               to="/"
+              className="hover:text-indigo-300 transition duration-300 ease-in-out"
             >
               Home
             </Link>
-          </li>{" "}
-          {/* <li className="border text-black-500 ">
+          </li>
+          <li>
             <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
-              to="/Register"
-            >
-              Register
-            </Link>
-          </li> */}
-          <li className=" text-black-500 ">
-            <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
               to="/User"
+              className="hover:text-indigo-300 transition duration-300 ease-in-out"
             >
-              user
-            </Link>
-          </li>{" "}
-          <li className=" text-black-500 ">
-            <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
-              to="/Admin"
-            >
-              Admin
-            </Link>
-          </li>{" "}
-          <li className=" text-black-500 ">
-            <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
-              to="/Editor"
-            >
-              Editor
+              User
             </Link>
           </li>
-          {/* <li className="nav-item text-black-500">
-            <Link
-              //   className={`${
-              //     location.pathname === "/about" ? "active" : ""
-              //   }`}
-              //   aria-disabled="true"
-              to="/Admin"
-            >
-              admin
-            </Link>
-          </li> */}
         </ul>
 
-        <div className="loginsignup flex gap-4">
-          <div className="signup">
-            <Link to="/Signup">
-              {" "}
-              <button>signup</button>
+        {/* Right Navigation */}
+        {!localStorage.getItem("token") ? (
+          <div className="flex gap-4">
+            <Link
+              type="button"
+              className="btn bg-indigo-700 px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300"
+              to="/Login"
+            >
+              Login
+            </Link>
+            <Link
+              type="button"
+              className="btn bg-indigo-700 px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300"
+              to="/Signup"
+            >
+              Signup
             </Link>
           </div>
-          <div className="login">
-          <Link to="/Login">
-              {" "}
-              <button>Login</button>
-            </Link>          </div>
-        </div>
+        ) : (
+          <div className="flex gap-6 items-center">
+            <div className="flex gap-6">
+              <Link
+                to="/Admin"
+                className="hover:text-indigo-300 transition duration-300 ease-in-out"
+              >
+                Admin
+              </Link>
+              <Link
+                to="/Editor"
+                className="hover:text-indigo-300 transition duration-300 ease-in-out"
+              >
+                Editor
+              </Link>
+            </div>
+            <div className="flex gap-4 items-center">
+              <Link
+                type="button"
+                className="btn bg-indigo-700 px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300"
+                onClick={handleluser}
+                to="/allusers"
+              >
+                Users Info
+              </Link>
+              <button
+              
+                type="button"
+                className="btn bg-red-600 px-4 py-2 rounded-md hover:bg-red-500 transition duration-300"
+                onClick={handlelogout}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
     </div>
   );

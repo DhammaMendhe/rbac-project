@@ -74,9 +74,6 @@ router.post('/createuser',
     })
 
 
-
-
-
 router.post('/login',
     //validation for multiple parameters requir array 
     body('email', 'enter a proper email').exists(),
@@ -92,23 +89,24 @@ router.post('/login',
 
         try {
             let success = false;
-            const user1 = await User.findOne({ email });
+            const user1 = await User.findOne({ email,role });
+            console.log(role)
             if (!user1) {
                 return res.status(500).json({ error: "enter valid credentials for login." });
             }
-            console.log(user1)
-            const allowedroles = await User.findOne({ role });
+            // console.log(user1.permissions)
+            if(user1.role ==  "admin"){
+                user1.permissions.create = true;
+                user1.permissions.update = true;
+                user1.permissions.delete = true;
 
-            if (!allowedroles) {
-                return res.status(500).json({ error: "enter valid role credentials for login." });
+            }else if(user1.role ==  "editor"){
+                user1.permissions.update = true;
+                user1.permissions.delete = true;
             }
 
-            // else{
-            //     return res.status(200).json({"success":"you logged in as.."})
-            // }
-            // console.log("this is role",allowedroles.role);
-
             const passwordCompare = await bcryptjs.compare(password, user1.password);
+            console.log("after")
 
             if (!passwordCompare) {
                 success = false;
