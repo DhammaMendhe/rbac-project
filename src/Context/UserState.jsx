@@ -9,7 +9,6 @@ const userStates = (props) => {
 
   const [users, setUsers] = useState(initialUsers);
 
-  //add notes
 
   const fetchusers = async () => {
     //API call

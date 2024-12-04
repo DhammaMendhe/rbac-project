@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import usercontext from "../../Context/context";
+import userlogo from '../../assets/user-regular.svg'
 
 export default function Allusers(props) {
   const context = useContext(usercontext);
   const { users, fetchusers, deleteUser } = context;
   //   const { users } = props;
-
   useEffect(() => {
+
     fetchusers();
+
   }, []);
 
   const handleUpdate = () => {};
@@ -40,15 +42,15 @@ export default function Allusers(props) {
             <tr key={user.id} className="hover:bg-gray-50">
               <td className="border border-gray-300 px-4 py-2">
                 <img
-                  src={user.logo || "https://via.placeholder.com/50"}
+                  src={user.logo || userlogo}
                   alt="User Logo"
                   className="w-10 h-10 rounded-full mx-auto"
                 />
               </td>
-              <td className="border border-gray-300 px-4 py-2">{user.name}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.email}</td>
-              <td className="border border-gray-300 px-4 py-2">{user.role}</td>
-              <td className="border border-gray-300 px-4 py-2">
+              <td key={user.id} className="border border-gray-300 px-4 py-2">{user.name}</td>
+              <td key={user.id} className="border border-gray-300 px-4 py-2">{user.email}</td>
+              <td key={user.id} className="border border-gray-300 px-4 py-2">{user.role}</td>
+              <td key={user.id} className="border border-gray-300 px-4 py-2">
                 {Object.entries(user.permissions).map(([key, value]) => (
                   <span
                     key={key}
