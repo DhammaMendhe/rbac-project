@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <div className="bg-gray-100 py-16 px-6 text-center">
+      <div className="bg-gray-100 py-16 px-6 my-8 text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
           Welcome to Our Website
         </h1>
@@ -17,7 +17,7 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="py-12 px-6">
+      <div className="py-12 px-6  my-8">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
           Features
         </h2>
@@ -44,7 +44,7 @@ export default function HomePage() {
       </div>
 
       {/* Call-to-Action Section */}
-      <div className="bg-blue-500 text-white py-16 px-6 text-center">
+      <div className="bg-blue-500 text-white py-16 px-6 text-center  my-8">
         <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
         <p className="text-lg mb-6">
           Sign up now and explore the features tailored just for you.

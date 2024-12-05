@@ -3,7 +3,7 @@
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-6">
+    <footer className="bg-gray-800 text-white py-6 my-9">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Section 1: About */}
         <div>
